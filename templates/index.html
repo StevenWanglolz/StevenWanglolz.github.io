@@ -1,0 +1,89 @@
+{% extends "base.html" %} {% block title %}Home - My Portfolio{% endblock %} {%
+block content %}
+<section class="hero-section text-center py-5">
+  <div class="container">
+    <h1 class="display-4">Welcome to My Portfolio</h1>
+    <p class="lead">Python Developer | Web Developer | Problem Solver</p>
+    <div class="mt-4">
+      <a href="/contact" class="btn btn-primary btn-lg me-3">Contact Me</a>
+      <a href="/about" class="btn btn-outline-dark btn-lg">Learn More</a>
+    </div>
+  </div>
+</section>
+
+<section class="projects-section py-5">
+  <div class="container">
+    <h2 class="text-center mb-5">Featured Projects</h2>
+    <div class="row">
+      {% for project in projects %}
+      <div class="col-md-6 col-lg-4 mb-4">
+        <div class="card h-100">
+          {% if project.image_url %}
+          <img
+            src="{{ project.image_url }}"
+            class="card-img-top"
+            alt="{{ project.title }}"
+          />
+          {% endif %}
+          <div class="card-body">
+            <h5 class="card-title">{{ project.title }}</h5>
+            <p class="card-text">{{ project.description }}</p>
+            <p class="text-muted">
+              <small>Technologies: {{ project.technologies }}</small>
+            </p>
+          </div>
+          <div class="card-footer bg-transparent">
+            {% if project.github_link %}
+            <a
+              href="{{ project.github_link }}"
+              class="btn btn-outline-dark btn-sm me-2"
+              target="_blank"
+            >
+              <i class="fab fa-github"></i> GitHub
+            </a>
+            {% endif %} {% if project.live_link %}
+            <a
+              href="{{ project.live_link }}"
+              class="btn btn-outline-primary btn-sm"
+              target="_blank"
+            >
+              <i class="fas fa-external-link-alt"></i> Live Demo
+            </a>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<section class="skills-section py-5 bg-light">
+  <div class="container">
+    <h2 class="text-center mb-5">Skills & Technologies</h2>
+    <div class="row text-center">
+      <div class="col-md-4 mb-4">
+        <div class="skill-category">
+          <i class="fas fa-code fa-3x mb-3"></i>
+          <h4>Backend Development</h4>
+          <p>Python, Flask, SQLAlchemy, REST APIs</p>
+        </div>
+      </div>
+      <div class="col-md-4 mb-4">
+        <div class="skill-category">
+          <i class="fas fa-paint-brush fa-3x mb-3"></i>
+          <h4>Frontend Development</h4>
+          <p>HTML5, CSS3, JavaScript, Bootstrap</p>
+        </div>
+      </div>
+      <div class="col-md-4 mb-4">
+        <div class="skill-category">
+          <i class="fas fa-database fa-3x mb-3"></i>
+          <h4>Database & Tools</h4>
+          <p>SQLite, Git, Docker, VS Code</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}
