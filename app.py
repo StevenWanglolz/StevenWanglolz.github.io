@@ -16,10 +16,16 @@ app.config['MAIL_PORT'] = 587
 app.config['MAIL_USE_TLS'] = True
 app.config['MAIL_USERNAME'] = os.getenv('EMAIL_USER', '')
 app.config['MAIL_PASSWORD'] = os.getenv('EMAIL_PASSWORD', '')
+app.config['PERSONAL_NAME'] = os.getenv('PERSONAL_NAME', 'Your Name')
 
 # Initialize extensions
 db = SQLAlchemy(app)
 mail = Mail(app)
+
+# Provide the personal name to all templates
+@app.context_processor
+def inject_personal_info():
+    return dict(personal_name=app.config['PERSONAL_NAME'])
 
 # Models
 
