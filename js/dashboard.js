@@ -3,16 +3,16 @@ document.addEventListener('DOMContentLoaded', async function() {
   console.log('Dashboard loaded');
   
   // Security: Check authentication first
-  if (!window.authService.isUserAuthenticated()) {
+  if (!window.authService.isAuthenticated()) {
     console.log('User not authenticated, redirecting to login');
     window.location.href = '/index.html';
     return;
   }
 
-  // Verify authentication
+  // Verify token with backend
   const verification = await window.authService.verifyToken();
   if (!verification.success) {
-    console.log('Authentication verification failed, redirecting to login');
+    console.log('Token verification failed, redirecting to login');
     window.location.href = '/index.html';
     return;
   }

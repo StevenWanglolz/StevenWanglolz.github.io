@@ -1,8 +1,8 @@
-# 🚀 Hybrid Authentication Setup (GitHub Pages + Local Backend)
+# 🚀 Frontend-Only Demo Setup
 
-## ✅ **SECURE SOLUTION - Frontend on GitHub Pages + Backend on Local Server!**
+## ✅ **SECURE SOLUTION - Frontend on GitHub Pages with Local Backend!**
 
-Your demo uses **GitHub Pages for the frontend** and a **local backend server for authentication**. This gives you the best of both worlds!
+Your demo uses **GitHub Pages for the frontend** and a **private local backend server** for authentication. The backend code is kept private on your local machine.
 
 ## 🔐 **Default Credentials:**
 
@@ -13,25 +13,32 @@ Your demo uses **GitHub Pages for the frontend** and a **local backend server fo
 
 ## 🚀 **Quick Start:**
 
-### **1. Install Dependencies:**
+### **1. Set Up Backend (Private):**
+
+The backend server code is kept private on your local machine. You'll need to create these files locally:
+
+- `server.js` - Backend authentication server
+- `package.json` - Dependencies configuration
+
+### **2. Install Dependencies:**
 
 ```bash
 npm install
 ```
 
-### **2. Start the Backend Server:**
+### **3. Start the Backend Server:**
 
 ```bash
 npm start
 ```
 
-### **3. Access Your Demo:**
+### **4. Access Your Demo:**
 
 - **Frontend**: `https://stevenwanglolz.github.io/` (GitHub Pages)
-- **Backend**: `http://localhost:3000` (Your local server)
+- **Backend**: `http://localhost:3000` (Your private local server)
 - **Login**: Use the credentials above
 
-### **4. How It Works:**
+### **5. How It Works:**
 
 1. **Frontend** runs on GitHub Pages (publicly accessible)
 2. **Backend** runs on your local machine (private authentication)
