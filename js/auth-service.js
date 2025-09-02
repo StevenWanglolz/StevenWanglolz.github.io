@@ -6,12 +6,9 @@ class AuthService {
   }
 
   getBaseURL() {
-    // Use localhost for development, or your server URL for production
-    if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
-      return 'http://localhost:3000';
-    } else {
-      return 'https://your-server-domain.com'; // Replace with your actual server URL
-    }
+    // Always use localhost for backend server
+    // You'll need to run the backend server locally
+    return 'http://localhost:3000';
   }
 
   // Login user
