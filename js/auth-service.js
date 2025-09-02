@@ -6,8 +6,13 @@ class AuthService {
   }
 
   getBaseURL() {
-    // Temporarily use localhost for testing
-    return 'http://localhost:3000';
+    // Use localhost for development, or tunnel URL for public access
+    if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+      return 'http://localhost:3000';
+    } else {
+      // Use the tunnel URL for GitHub Pages
+      return 'https://dolce-demo.loca.lt';
+    }
   }
 
   // Login user
