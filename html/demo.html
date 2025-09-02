@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI 工作台｜Dashboard</title>
+  <link rel="stylesheet" href="../css/dashboard.css" />
+</head>
+<body>
+  <div class="dashboard-container">
+    <!-- Top Toolbar -->
+    <div class="top-toolbar">
+      <div class="toolbar-left">
+        <div class="logo">
+          <span class="logo-icon">🤖</span>
+          <span class="logo-text">東笙實業</span>
+        </div>
+      </div>
+      <div class="toolbar-center">
+        <nav class="main-nav">
+          <a href="#" class="nav-item active" data-tab="ai-generation">AI圖文生成</a>
+          <a href="#" class="nav-item" data-tab="ai-sampling">AI打樣</a>
+          <a href="#" class="nav-item" data-tab="generation-records">生成記錄</a>
+        </nav>
+      </div>
+      <div class="toolbar-right">
+        <div class="user-menu">
+          <button class="user-button" id="userMenuBtn">
+            <span class="user-avatar">👤</span>
+            <span class="user-name" id="userName">管理員</span>
+            <span class="dropdown-arrow">▼</span>
+          </button>
+          <div class="user-dropdown" id="userDropdown" hidden>
+            <a href="login.html" class="dropdown-item">登出</a>
+            <a href="user_management_home.html" class="dropdown-item">使用者管理</a> <!-- 管理員功能 -->
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main Content Area -->
+    <div class="main-content">
+      <!-- AI圖文生成 Tab Content -->
+      <div class="tab-content active" id="ai-generation-tab">
+        <div class="tab-header">
+          <h2>AI圖文生成</h2>
+          <p>輸入提示詞生成圖片或文字</p>
+        </div>
+        
+        <div class="generation-section">
+          <div class="input-area">
+            <label for="generationPrompt">提示詞：</label>
+            <textarea 
+              id="generationPrompt" 
+              placeholder="請輸入您想要生成的內容描述..."
+              rows="4"
+            ></textarea>
+          </div>
+          
+          <div class="action-buttons">
+            <button class="btn btn-primary" id="generateBtn">生成</button>
+            <button class="btn btn-secondary" id="copyBtn" style="display: none;">複製文字</button>
+            <button class="btn btn-secondary" id="downloadBtn" style="display: none;">下載圖片</button>
+          </div>
+          
+          <div class="result-area">
+            <div class="result-placeholder" id="resultPlaceholder">
+              生成結果將顯示在這裡
+            </div>
+            <div class="result-content" id="resultContent" style="display: none;">
+              <!-- Generated content will appear here -->
+            </div>
+          </div>
+          
+          <!-- Demo Results Section -->
+          <div class="demo-results" style="margin-top: 30px; padding: 20px; background: #f8f9fa; border: 2px dashed #ccc; border-radius: 8px;">
+            
+            <!-- Text Generation Demo -->
+            <div class="demo-item" style="margin-bottom: 25px; padding: 15px; background: white; border-radius: 6px; border: 1px solid #e9ecef;">
+              <h4 style="color: #007bff; margin-bottom: 10px;">✍️ 文字生成</h4>
+              <div style="margin-bottom: 10px;">
+                <strong>提示詞：</strong>
+                <span style="color: #666; font-style: italic;">為東笙集團專營百貨櫃上女鞋品牌撰寫一段吸引人的行銷文案，強調舒適度、時尚設計和百貨品質</span>
+              </div>
+              <div style="background: #f8f9fa; padding: 15px; border-radius: 4px; border-left: 4px solid #007bff;">
+                <strong>生成結果：</strong><br><br>
+                <span style="line-height: 1.6;">
+                  👠 <strong>東笙集團 - 百貨櫃上女鞋的時尚典範</strong><br><br>
+                  
+                  探索東笙集團專營百貨櫃上女鞋品牌，將舒適與時尚完美融合。每一雙鞋都承載著精緻工藝與創新設計，從選材到縫製，每一個細節都經過精心雕琢。<br><br>
+                  
+                  ✨ <strong>品牌特色：</strong><br>
+                  • 百貨專櫃品質，精選優質材料<br>
+                  • 精工縫製，確保完美貼合度<br>
+                  • 人體工學設計，全天候舒適穿著<br>
+                  • 時尚與實用並重，適合各種場合<br><br>
+                  
+                  🌟 穿上東笙集團女鞋，讓每一步都充滿自信與優雅。百貨品質，時尚精神，為您打造專屬的時尚品味。
+                </span>
+              </div>
+            </div>
+            
+            <!-- Image Generation Demo -->
+            <div class="demo-item" style="margin-bottom: 25px; padding: 15px; background: white; border-radius: 6px; border: 1px solid #e9ecef;">
+              <h4 style="color: #28a745; margin-bottom: 10px;">🖼️ 圖片生成</h4>
+              <div style="margin-bottom: 10px;">
+                <strong>提示詞：</strong>
+                <span style="color: #666; font-style: italic;">設計一張時尚感十足的東笙集團百貨櫃上女鞋產品海報，包含鞋款展示、品牌標誌和百貨元素，使用優雅的色調營造高端時尚形象</span>
+              </div>
+              <div style="background: #f8f9fa; padding: 15px; border-radius: 4px; border-left: 4px solid #28a745;">
+                <strong>生成結果：</strong><br><br>
+                <div style="text-align: center;">
+                  <!-- Image placeholder - replace with your own image -->
+                  <img src="../img/dolce image.jpg" alt="東笙集團女鞋海報" style="width: 300px; height: auto; border-radius: 8px;">
+                    <div style="text-align: center; color: #28a745;">
+                      <div style="font-size: 48px; margin-bottom: 10px;">👠</div>
+                      <div style="font-size: 14px; font-weight: bold;">AI 生成的東笙集團女鞋海報</div>
+                      <div style="font-size: 12px; margin-top: 5px; color: #666;">請在此處替換為您的實際圖片</div>
+                      <div style="font-size: 12px; margin-top: 5px; color: #666;">請在此處替換為您的實際圖片</div>
+                    </div>
+                  </div>
+                  <p style="margin-top: 10px; color: #666; font-size: 14px;">
+                    海報設計完成！包含時尚鞋款展示、百貨風格元素和高端品牌呈現
+                  </p>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Sampling Demo -->
+            <div class="demo-item" style="padding: 15px; background: white; border-radius: 6px; border: 1px solid #e9ecef;">
+              <h4 style="color: #ffc107; margin-bottom: 10px;">🎨 打樣生成示範</h4>
+              <div style="margin-bottom: 10px;">
+                <strong>提示詞：</strong>
+                <span style="color: #666; font-style: italic;">基於上傳的東笙集團女鞋圖片，生成多種不同風格的產品展示效果，包含經典優雅、現代時尚和休閒舒適風格</span>
+              </div>
+              <div style="background: #f8f9fa; padding: 15px; border-radius: 4px; border-left: 4px solid #ffc107;">
+                <strong>生成結果：</strong><br><br>
+                <div style="text-align: center;">
+                  <!-- Sampling result placeholder - replace with your own image -->
+                  <div style="width: 300px; height: 200px; background: linear-gradient(135deg, #fff8e1, #fce4ec); border: 2px dashed #ffc107; border-radius: 8px; display: flex; align-items: center; justify-content: center; margin: 0 auto;">
+                    <div style="text-align: center; color: #ffc107;">
+                      <div style="font-size: 48px; margin-bottom: 10px;">👟</div>
+                      <div style="font-size: 14px; font-weight: bold;">AI 打樣結果展示</div>
+                      <div style="font-size: 12px; margin-top: 5px; color: #666;">請在此處替換為您的實際打樣圖片</div>
+                    </div>
+                  </div>
+                  <p style="margin-top: 10px; color: #666; font-size: 14px;">
+                    打樣完成！已生成經典優雅、現代時尚和休閒舒適三種不同風格效果
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- AI打樣 Tab Content -->
+      <div class="tab-content" id="ai-sampling-tab">
+        <div class="tab-header">
+          <h2>AI打樣</h2>
+          <p>上傳圖片並生成打樣結果</p>
+        </div>
+        
+        <div class="sampling-section">
+          <div class="upload-area">
+            <label for="imageUpload">上傳圖片：</label>
+            <div class="upload-box" id="uploadBox">
+              <input type="file" id="imageUpload" accept="image/*" multiple style="display: none;">
+              <div class="upload-placeholder">
+                <span class="upload-icon">📁</span>
+                <span>點擊上傳圖片（可選擇多張）</span>
+              </div>
+            </div>
+          </div>
+          
+          <div class="uploaded-images" id="uploadedImages" style="display: none;">
+            <h4>已上傳的圖片：</h4>
+            <div class="image-list" id="imageList">
+              <!-- Uploaded images will appear here -->
+            </div>
+          </div>
+          
+          <div class="prompt-area">
+            <label for="samplingPrompt">打樣提示詞：</label>
+            <textarea 
+              id="samplingPrompt" 
+              placeholder="請輸入打樣需求描述..."
+              rows="3"
+            ></textarea>
+          </div>
+          
+          <div class="action-buttons">
+            <button class="btn btn-primary" id="generateSamplingBtn">生成打樣</button>
+            <button class="btn btn-secondary" id="downloadSamplingBtn" style="display: none;">下載結果</button>
+          </div>
+          
+          <div class="sampling-result">
+            <div class="result-placeholder" id="samplingResultPlaceholder">
+              打樣結果將顯示在這裡
+            </div>
+            <div class="result-content" id="samplingResultContent" style="display: none;">
+              <!-- Sampling result will appear here -->
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 生成記錄 Tab Content -->
+      <div class="tab-content" id="generation-records-tab">
+        <div class="tab-header">
+          <h2>生成記錄</h2>
+          <p>查看您的 AI 生成歷史記錄</p>
+        </div>
+        
+        <div class="records-section">
+          <div class="records-controls">
+            <div class="search-box">
+              <input type="text" id="recordsSearch" placeholder="搜尋提示詞或內容..." />
+            </div>
+            <select id="recordsTypeFilter" class="select">
+              <option value="">類型（全部）</option>
+              <option value="text">文字生成</option>
+              <option value="image">圖片生成</option>
+              <option value="sampling">打樣生成</option>
+            </select>
+            <select id="recordsDateFilter" class="select">
+              <option value="">日期（全部）</option>
+              <option value="today">今天</option>
+              <option value="week">本週</option>
+              <option value="month">本月</option>
+            </select>
+          </div>
+          
+          <div class="records-list" id="recordsList">
+            <!-- Generation records will be displayed here -->
+          </div>
+          
+          <div class="records-pagination" id="recordsPagination">
+            <!-- Pagination will be generated here -->
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="dashboard-footer">
+      <div class="footer-content">
+        <div class="footer-info">
+          <span>頁面版本 v1.0</span>
+          <span>Build #20250825</span>
+          <span>© Cloud Interactive</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Generation Details Modal -->
+  <div class="modal-overlay" id="generationModalOverlay" style="display: none;">
+    <div class="modal" id="generationModal">
+      <div class="modal-header">
+        <h3 id="generationModalTitle">生成記錄詳情</h3>
+        <button class="modal-close" id="generationModalClose">&times;</button>
+      </div>
+      <div class="modal-content">
+        <div class="generation-details">
+          <div class="detail-section">
+            <h4>提示詞</h4>
+            <div class="prompt-content" id="modalPrompt"></div>
+          </div>
+          <div class="detail-section">
+            <h4>生成結果</h4>
+            <div class="result-content" id="modalResult"></div>
+          </div>
+          <div class="detail-section">
+            <h4>生成資訊</h4>
+            <div class="generation-info">
+              <span class="info-item">
+                <strong>類型：</strong><span id="modalType"></span>
+              </span>
+              <span class="info-item">
+                <strong>時間：</strong><span id="modalTime"></span>
+              </span>
+              <span class="info-item">
+                <strong>狀態：</strong><span id="modalStatus"></span>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-actions">
+        <button class="btn btn-secondary" id="copyGenerationBtn">複製內容</button>
+        <button class="btn btn-primary" id="closeGenerationModalBtn">關閉</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="../js/dashboard.js"></script>
+</body>
+</html>

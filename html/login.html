@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>內部系統登入頁｜Wireframe</title>
+  <link rel="stylesheet" href="../css/login.css">
+</head>
+<body>
+  <div class="login-container">
+    <!-- Background Pattern -->
+    <div class="background-pattern"></div>
+    
+    <!-- Main Login Form -->
+    <div class="login-card">
+      <div class="login-header">
+        <div class="logo">
+          <!-- <div class="logo-icon">🔐</div> -->
+          <h1>東笙實業</h1>
+        </div>
+        <!-- <p class="subtitle">請輸入您的帳號密碼進行登入</p> -->
+      </div>
+
+      <form class="login-form" id="loginForm">
+        <div class="form-group">
+          <label for="username">帳號</label>
+          <div class="input-wrapper">
+            <input 
+              type="text" 
+              id="username" 
+              name="username" 
+              placeholder="請輸入帳號"
+              required
+            >
+            <!-- <div class="input-icon">👤</div> -->
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="password">密碼</label>
+          <div class="input-wrapper">
+            <input 
+              type="password" 
+              id="password" 
+              name="password" 
+              placeholder="請輸入密碼"
+              required
+            >
+            <!-- <div class="input-icon">🔒</div> -->
+            <button type="button" class="toggle-password" id="togglePassword">👁️</button>
+          </div>
+        </div>
+        
+        <!-- <div class="form-options">
+          <label class="checkbox-wrapper">
+            <input type="checkbox" id="rememberMe" name="rememberMe">
+            <span class="checkmark"></span>
+            記住我
+          </label>
+          <a href="#" class="forgot-password">忘記密碼？</a>
+        </div> -->
+
+        <button type="submit" class="login-btn" id="loginBtn">
+          <span class="btn-text">登入</span>
+          <div class="btn-loader" style="display: none;">
+            <div class="spinner"></div>
+          </div>
+        </button>
+      </form>
+
+      <!-- Alerts Section -->
+      <div class="alerts-container" id="alertsContainer">
+        <div class="alert tip" id="firstLoginTip">
+          <div class="alert-icon">💡</div>
+          <div class="alert-content">
+            <strong>提示：</strong>首次登入請先變更密碼
+          </div>
+        </div>
+        <div class="alert tip" id="passwordExpiryTip">
+          <div class="alert-icon">⚠️</div>
+          <div class="alert-content">
+            <strong>提示：</strong>已經一個月沒更換密碼了
+          </div>
+        </div>
+        <div class="alert error" id="loginError" style="display: none;">
+          <div class="alert-icon">❌</div>
+          <div class="alert-content">
+            <strong>錯誤：</strong>帳號或密碼不正確
+          </div>
+        </div>
+      </div>
+
+      <!-- Login Footer
+      <div class="login-footer">
+        <p>還沒有帳號？<a href="#" class="link">立即註冊</a></p>
+      </div> -->
+    </div>
+
+    <!-- Acceptance Criteria (Development Only)
+    <div class="acceptance-criteria" id="acceptanceCriteria">
+      <details>
+        <summary><strong>驗收重點</strong></summary>
+        <ul>
+          <li>必填欄位空值提示、密碼強度規則提示正確顯示</li>
+          <li>錯誤帳密時顯示錯誤訊息且不洩漏帳號存在與否</li>
+          <li>成功登入後導向主控台並建立 Session；取消按鈕返回空白狀態</li>
+          <li>環境與版本資訊正確顯示（避免誤上線操作）</li>
+        </ul>
+      </details>
+    </div> -->
+  </div>
+
+  <script src="../js/login.js"></script>
+</body>
+</html>

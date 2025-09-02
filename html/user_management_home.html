@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>使用者管理｜Wireframe</title>
+  <link rel="stylesheet" href="../css/user_management_home.css" />
+</head>
+<body>
+  <div class="page-container">
+    <!-- Main Content -->
+    <div class="main-content">
+      <!-- Toolbar Section -->
+      <div class="toolbar-section">
+        <div class="search-filters">
+          <div class="search-box">
+            <input 
+              type="text" 
+              class="search-input" 
+              placeholder="搜尋使用者姓名或帳號"
+              id="searchInput"
+            />
+          </div>
+          
+          <div class="filter-controls">
+            <select class="filter-select" id="roleFilter">
+              <option value="">角色（全部）</option>
+              <option value="行銷">行銷</option>
+              <option value="客服">客服</option>
+              <option value="設計">設計</option>
+              <option value="管理">管理</option>
+            </select>
+            
+            <select class="filter-select" id="statusFilter">
+              <option value="">狀態（全部）</option>
+              <option value="啟用">啟用</option>
+              <option value="停用">停用</option>
+              <option value="待啟用">待啟用</option>
+            </select>
+          </div>
+        </div>
+        
+        <div class="action-buttons">
+          <button class="btn btn-primary" id="btnCreate" type="button">新增使用者</button>
+        </div>
+      </div>
+
+      <!-- Users Table -->
+      <div class="table-container">
+        <div class="table-header">
+          <div class="table-title">使用者列表</div>
+          <div class="table-info" id="tableInfo">共 3 筆資料</div>
+        </div>
+        
+        <div class="table">
+          <div class="table-head">
+            <div class="table-row">
+              <div class="table-cell header-cell">姓名</div>
+              <div class="table-cell header-cell">帳號</div>
+              <div class="table-cell header-cell">角色</div>
+              <div class="table-cell header-cell">狀態</div>
+              <div class="table-cell header-cell">上次登入</div>
+              <div class="table-cell header-cell">建立時間</div>
+              <div class="table-cell header-cell">操作</div>
+            </div>
+          </div>
+
+          <div class="table-body" id="userTableBody">
+            <!-- User Row 1 -->
+            <div class="table-row" data-role="行銷" data-status="啟用">
+              <div class="table-cell" data-col="name">王小明</div>
+              <div class="table-cell" data-col="account">ming.wang@example.com</div>
+              <div class="table-cell" data-col="role">
+                <span class="status-chip role-chip">行銷</span>
+              </div>
+              <div class="table-cell" data-col="status">
+                <span class="status-chip status-active">啟用</span>
+              </div>
+              <div class="table-cell" data-col="lastLogin">2025/08/24 16:05</div>
+              <div class="table-cell" data-col="createdAt">2025/08/11</div>
+              <div class="table-cell actions-cell">
+                <div class="action-buttons">
+                  <button
+                    class="btn btn-small btn-edit"
+                    type="button"
+                    data-name="王小明"
+                    data-account="ming.wang@example.com"
+                    data-role="行銷"
+                    data-status="啟用"
+                    data-force-change="false"
+                  >編輯</button>
+                  <button
+                    class="btn btn-small btn-secondary"
+                    type="button"
+                    onclick="window.location.href='user_logs.html?user=ming.wang@example.com'"
+                  >操作歷程</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- User Row 2 -->
+            <div class="table-row" data-role="客服" data-status="待啟用">
+              <div class="table-cell" data-col="name">林佳琪</div>
+              <div class="table-cell" data-col="account">E10239</div>
+              <div class="table-cell" data-col="role">
+                <span class="status-chip role-chip">客服</span>
+              </div>
+              <div class="table-cell" data-col="status">
+                <span class="status-chip status-pending">待啟用</span>
+              </div>
+              <div class="table-cell" data-col="lastLogin">—</div>
+              <div class="table-cell" data-col="createdAt">2025/08/18</div>
+              <div class="table-cell actions-cell">
+                <div class="action-buttons">
+                  <button
+                    class="btn btn-small btn-edit"
+                    type="button"
+                    data-name="林佳琪"
+                    data-account="E10239"
+                    data-role="客服"
+                    data-status="待啟用"
+                    data-force-change="true"
+                  >編輯</button>
+                  <button
+                    class="btn btn-small btn-secondary"
+                    type="button"
+                    onclick="window.location.href='user_logs.html?user=E10239'"
+                  >操作歷程</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- User Row 3 -->
+            <div class="table-row" data-role="設計" data-status="停用">
+              <div class="table-cell" data-col="name">張家豪</div>
+              <div class="table-cell" data-col="account">jhao.zhang@example.com</div>
+              <div class="table-cell" data-col="role">
+                <span class="status-chip role-chip">設計</span>
+              </div>
+              <div class="table-cell" data-col="status">
+                <span class="status-chip status-inactive">停用</span>
+              </div>
+              <div class="table-cell" data-col="lastLogin">2025/07/30 09:12</div>
+              <div class="table-cell" data-col="createdAt">2025/07/30</div>
+              <div class="table-cell actions-cell">
+                <div class="action-buttons">
+                  <button
+                    class="btn btn-small btn-edit"
+                    type="button"
+                    data-name="張家豪"
+                    data-account="jhao.zhang@example.com"
+                    data-role="設計"
+                    data-status="停用"
+                    data-force-change="false"
+                  >編輯</button>
+                  <button
+                    class="btn btn-small btn-secondary"
+                    type="button"
+                    onclick="window.location.href='user_logs.html?user=jhao.zhang@example.com'"
+                  >操作歷程</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal Overlay -->
+    <div class="modal-overlay" id="modalOverlay" hidden></div>
+
+    <!-- User Modal -->
+    <div class="modal" id="userModal" hidden>
+      <div class="modal-header">
+        <h2 class="modal-title" id="modalTitle">新增使用者</h2>
+        <button class="modal-close" id="btnClose" type="button" aria-label="關閉">✕</button>
+      </div>
+
+      <form class="modal-form" id="userForm">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="nameInput">姓名</label>
+            <input 
+              id="nameInput" 
+              class="form-input" 
+              type="text" 
+              placeholder="請輸入姓名"
+              required
+            />
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="accountInput">帳號（Email / 員工編號）</label>
+            <input 
+              id="accountInput" 
+              class="form-input" 
+              type="text" 
+              placeholder="請輸入帳號"
+              required
+            />
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="passwordInput">密碼</label>
+            <input 
+              id="passwordInput" 
+              class="form-input" 
+              type="password" 
+              placeholder="請輸入密碼"
+              required
+            />
+            <div class="password-requirements">
+              <span class="requirement" data-requirement="length">最低 8 碼</span>
+              <span class="requirement" data-requirement="alphanumeric">含英數</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-row two-columns">
+          <div class="form-group">
+            <label for="roleSelect">角色</label>
+            <select id="roleSelect" class="form-select" required>
+              <option value="">請選擇角色</option>
+              <option value="行銷">行銷</option>
+              <option value="客服">客服</option>
+              <option value="設計">設計</option>
+              <option value="管理">管理</option>
+            </select>
+          </div>
+          
+          <div class="form-group">
+            <label for="statusSelect">狀態</label>
+            <select id="statusSelect" class="form-select" required>
+              <option value="">請選擇狀態</option>
+              <option value="啟用">啟用</option>
+              <option value="停用">停用</option>
+              <option value="待啟用">待啟用</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group checkbox-group">
+            <label class="checkbox-label">
+              <input type="checkbox" id="forceChange" />
+              <span class="checkmark"></span>
+              首次登入需變更密碼
+            </label>
+          </div>
+        </div>
+
+        <div class="modal-actions">
+          <button class="btn btn-secondary" id="btnCancel" type="button">取消</button>
+          <button class="btn btn-primary" id="btnSave" type="button">儲存</button>
+        </div>
+
+        <div class="form-message" id="formMessage" hidden></div>
+      </form>
+    </div>
+  </div>
+
+  <script src="../js/user_management_home.js"></script>
+</body>
+</html>

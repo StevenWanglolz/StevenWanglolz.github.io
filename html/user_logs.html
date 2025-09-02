@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>使用者日誌｜Wireframe</title>
+  <link rel="stylesheet" href="../css/user_logs.css" />
+</head>
+<body>
+  <div class="container">
+    <!-- Header -->
+    <div class="header">
+      <h1>使用者日誌</h1>
+      <p>查看系統使用記錄和活動日誌</p>
+    </div>
+
+    <!-- Controls -->
+    <div class="controls">
+      <div class="search-filters">
+        <div class="search-box">
+          <input type="text" id="searchInput" placeholder="搜尋動作或操作者..." />
+        </div>
+        <select id="typeFilter" class="select">
+          <option value="">類型（全部）</option>
+          <option value="登入">登入</option>
+          <option value="管理操作">管理操作</option>
+          <option value="生成">生成</option>
+        </select>
+        <select id="dateFilter" class="select">
+          <option value="">日期（全部）</option>
+          <option value="today">今天</option>
+          <option value="week">本週</option>
+          <option value="month">本月</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Table Container -->
+    <div class="table-container">
+      <table class="logs-table">
+        <thead>
+          <tr>
+            <th>時間</th>
+            <th>動作</th>
+            <th>IP</th>
+            <th>操作者</th>
+            <th>結果</th>
+          </tr>
+        </thead>
+        <tbody id="logsBody">
+          <tr data-type="生成">
+            <td>2025/08/23 14:02</td>
+            <td>生成報表：月度登入統計</td>
+            <td>198.51.100.8</td>
+            <td>管理員</td>
+            <td><span class="result-badge success">生成完成</span></td>
+          </tr>
+          <tr data-type="生成">
+            <td>2025/08/23 13:45</td>
+            <td>AI文字生成：產品介紹文案</td>
+            <td>198.51.100.8</td>
+            <td>管理員</td>
+            <td>
+              <button class="btn btn-text" data-text="基於您的需求，AI生成了以下產品介紹文案：&#10;&#10;產品特色：&#10;• 高品質材料製作&#10;• 精緻工藝設計&#10;• 多種顏色選擇&#10;• 環保無毒認證&#10;&#10;適用場景：&#10;適合各種室內裝飾需求，為您的空間增添美感。">查看文字</button>
+            </td>
+          </tr>
+          <tr data-type="生成">
+            <td>2025/08/23 13:30</td>
+            <td>AI圖片生成：產品宣傳海報</td>
+            <td>198.51.100.8</td>
+            <td>管理員</td>
+            <td>
+              <div class="image-grid">
+                <div class="image-thumbnail">
+                  <img src="https://via.placeholder.com/80x80/007bff/ffffff?text=AI+Image+1" alt="Generated Image 1">
+                </div>
+                <div class="image-thumbnail">
+                  <img src="https://via.placeholder.com/80x80/28a745/ffffff?text=AI+Image+2" alt="Generated Image 2">
+                </div>
+              </div>
+            </td>
+          </tr>
+          <tr data-type="生成">
+            <td>2025/08/23 13:15</td>
+            <td>AI圖片生成：產品包裝設計</td>
+            <td>198.51.100.8</td>
+            <td>管理員</td>
+            <td>
+              <div class="image-grid">
+                <div class="image-thumbnail">
+                  <img src="https://via.placeholder.com/80x80/dc3545/ffffff?text=AI+Image+3" alt="Generated Image 3">
+                </div>
+              </div>
+            </td>
+          </tr>
+          <tr data-type="登入">
+            <td>2025/08/23 12:30</td>
+            <td>使用者登入</td>
+            <td>198.51.100.8</td>
+            <td>管理員</td>
+            <td><span class="result-badge success">登入成功</span></td>
+          </tr>
+          <tr data-type="管理操作">
+            <td>2025/08/23 11:45</td>
+            <td>新增使用者：張三</td>
+            <td>198.51.100.8</td>
+            <td>管理員</td>
+            <td><span class="result-badge success">新增成功</span></td>
+          </tr>
+          <tr data-type="生成">
+            <td>2025/08/23 11:20</td>
+            <td>AI文字生成：客服回覆模板</td>
+            <td>198.51.100.8</td>
+            <td>管理員</td>
+            <td>
+              <button class="btn btn-text" data-text="感謝您的來信，以下是我們的回覆：&#10;&#10;關於您提到的問題，我們已經記錄並會盡快處理。&#10;&#10;如果您還有其他疑問，歡迎隨時聯繫我們。&#10;&#10;客服團隊">查看文字</button>
+            </td>
+          </tr>
+          <tr data-type="生成">
+            <td>2025/08/23 11:00</td>
+            <td>AI圖片生成：網站橫幅</td>
+            <td>198.51.100.8</td>
+            <td>管理員</td>
+            <td>
+              <div class="image-grid">
+                <div class="image-thumbnail">
+                  <img src="https://via.placeholder.com/80x80/ffc107/ffffff?text=AI+Image+4" alt="Generated Image 4">
+                </div>
+                <div class="image-thumbnail">
+                  <img src="https://via.placeholder.com/80x80/17a2b8/ffffff?text=AI+Image+5" alt="Generated Image 5">
+                </div>
+                <div class="image-thumbnail">
+                  <img src="https://via.placeholder.com/80x80/6f42c1/ffffff?text=AI+Image+6" alt="Generated Image 6">
+                </div>
+              </div>
+            </td>
+          </tr>
+          <tr data-type="登入">
+            <td>2025/08/23 10:15</td>
+            <td>使用者登入</td>
+            <td>203.0.113.15</td>
+            <td>李四</td>
+            <td><span class="result-badge success">登入成功</span></td>
+          </tr>
+          <tr data-type="管理操作">
+            <td>2025/08/23 09:45</td>
+            <td>修改使用者權限：王小明</td>
+            <td>198.51.100.8</td>
+            <td>管理員</td>
+            <td><span class="result-badge success">修改成功</span></td>
+          </tr>
+          <tr data-type="生成">
+            <td>2025/08/23 09:20</td>
+            <td>AI文字生成：產品規格說明</td>
+            <td>198.51.100.8</td>
+            <td>管理員</td>
+            <td>
+              <button class="btn btn-text" data-text="產品規格說明：&#10;&#10;尺寸：長 30cm × 寬 20cm × 高 15cm&#10;重量：約 500g&#10;材質：高級 ABS 塑膠&#10;顏色：白色、黑色、藍色&#10;包裝：精美禮盒包裝&#10;認證：通過 ISO 9001 品質認證">查看文字</button>
+            </td>
+          </tr>
+          <tr data-type="生成">
+            <td>2025/08/23 09:00</td>
+            <td>AI圖片生成：產品圖示</td>
+            <td>198.51.100.8</td>
+            <td>管理員</td>
+            <td>
+              <div class="image-grid">
+                <div class="image-thumbnail">
+                  <img src="https://via.placeholder.com/80x80/e83e8c/ffffff?text=AI+Image+7" alt="Generated Image 7">
+                </div>
+                <div class="image-thumbnail">
+                  <img src="https://via.placeholder.com/80x80/fd7e14/ffffff?text=AI+Image+8" alt="Generated Image 8">
+                </div>
+              </div>
+            </td>
+          </tr>
+          <tr data-type="登入">
+            <td>2025/08/23 08:30</td>
+            <td>使用者登入</td>
+            <td>198.51.100.8</td>
+            <td>管理員</td>
+            <td><span class="result-badge success">登入成功</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Pagination -->
+    <div class="pagination" id="pagination">
+      <!-- Pagination buttons will be generated here -->
+    </div>
+
+    <!-- Table Info -->
+    <div class="table-info" id="tableInfo">
+      <!-- Table info will be generated here -->
+    </div>
+  </div>
+
+  <!-- Text Generation Modal -->
+  <div class="modal-overlay" id="textModalOverlay" style="display: none;">
+    <div class="modal" id="textModal">
+      <div class="modal-header">
+        <h3>AI 生成文字內容</h3>
+        <button class="modal-close" id="textModalClose">&times;</button>
+      </div>
+      <div class="modal-content">
+        <div class="generated-text" id="generatedTextContent">
+          <!-- Generated text will be displayed here -->
+        </div>
+      </div>
+      <div class="modal-actions">
+        <button class="btn btn-secondary" id="copyTextBtn">複製文字</button>
+        <button class="btn btn-primary" id="closeTextModalBtn">關閉</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="../js/user_logs.js"></script>
+</body>
+</html>
