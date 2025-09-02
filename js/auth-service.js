@@ -26,6 +26,28 @@ class AuthService {
         body: JSON.stringify({ username, password }),
       });
 
+      // Check if response is ok and content type is JSON
+      if (!response.ok) {
+        if (response.status === 511) {
+          return { 
+            success: false, 
+            error: 'Network authentication required. Please visit the tunnel URL first to authenticate.' 
+          };
+        }
+        return { 
+          success: false, 
+          error: `Server error: ${response.status} ${response.statusText}` 
+        };
+      }
+
+      const contentType = response.headers.get('content-type');
+      if (!contentType || !contentType.includes('application/json')) {
+        return { 
+          success: false, 
+          error: 'Server returned non-JSON response. Please check if the tunnel is properly authenticated.' 
+        };
+      }
+
       const data = await response.json();
 
       if (data.success) {
@@ -38,6 +60,12 @@ class AuthService {
       }
     } catch (error) {
       console.error('Login error:', error);
+      if (error instanceof SyntaxError && error.message.includes('Unexpected token')) {
+        return { 
+          success: false, 
+          error: 'Server returned HTML instead of JSON. Please authenticate with the tunnel first.' 
+        };
+      }
       return { success: false, error: 'Network error. Please check if the server is running.' };
     }
   }
@@ -75,6 +103,23 @@ class AuthService {
         },
       });
 
+      if (!response.ok) {
+        if (response.status === 511) {
+          return { 
+            success: false, 
+            error: 'Network authentication required. Please visit the tunnel URL first.' 
+          };
+        }
+        this.logout();
+        return { success: false, error: `Server error: ${response.status}` };
+      }
+
+      const contentType = response.headers.get('content-type');
+      if (!contentType || !contentType.includes('application/json')) {
+        this.logout();
+        return { success: false, error: 'Server returned non-JSON response' };
+      }
+
       const data = await response.json();
 
       if (data.success) {
@@ -87,6 +132,9 @@ class AuthService {
     } catch (error) {
       console.error('Token verification error:', error);
       this.logout();
+      if (error instanceof SyntaxError && error.message.includes('Unexpected token')) {
+        return { success: false, error: 'Server returned HTML instead of JSON' };
+      }
       return { success: false, error: 'Network error' };
     }
   }
