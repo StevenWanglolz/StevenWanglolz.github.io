@@ -25,6 +25,9 @@ document.addEventListener('DOMContentLoaded', function() {
   async function initializePage() {
     console.log('Initializing login page...');
     
+    // Display today's credentials in console for demo purposes
+    window.demoProtection.displayCredentials();
+    
     // Check demo access first
     if (window.demoProtection.isAccessCodeRequired()) {
       try {

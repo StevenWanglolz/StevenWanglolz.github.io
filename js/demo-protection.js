@@ -25,6 +25,31 @@ class DemoProtection {
     return base.slice(0, 8);
   }
 
+  // Display today's credentials in console (for demo purposes)
+  displayCredentials() {
+    const accessCode = this.accessCode;
+    const secret = 'Dolce2024';
+    const today = new Date().toISOString().slice(0, 10).replace(/-/g, '');
+    
+    function generatePassword(user) {
+      const combined = secret + today + user;
+      let hash = 0;
+      for (let i = 0; i < combined.length; i++) {
+        const char = combined.charCodeAt(i);
+        hash = ((hash << 5) - hash) + char;
+        hash = hash & hash;
+      }
+      const base = Math.abs(hash).toString(36);
+      return base.slice(0, 8) + '!';
+    }
+    
+    console.log('🔐 Today\'s Demo Credentials:');
+    console.log('Access Code:', accessCode);
+    console.log('Admin Password:', generatePassword('admin'));
+    console.log('Demo Password:', generatePassword('demo'));
+    console.log('Date:', new Date().toISOString().slice(0, 10));
+  }
+
   // Check if access code is required
   isAccessCodeRequired() {
     const lastAccess = localStorage.getItem('demoAccessGranted');

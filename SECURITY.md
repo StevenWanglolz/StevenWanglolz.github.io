@@ -78,7 +78,8 @@ JWT_SECRET=your_jwt_secret_here
 - **Admin**: username: `admin`, password: [generated daily]
 - **Demo User**: username: `demo`, password: [generated daily]
 
-#### How to Get Today's Credentials:
+#### How to Get Today's Credentials
+
 1. Visit the demo site
 2. Open browser console (F12)
 3. Run the credential generator script
