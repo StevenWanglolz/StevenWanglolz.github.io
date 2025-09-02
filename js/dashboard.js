@@ -118,8 +118,12 @@ document.addEventListener('DOMContentLoaded', async function() {
     console.log('Initializing dashboard...');
     
     // Set user name from localStorage or default
-    const storedUsername = localStorage.getItem('currentUser') || '管理員';
-    userName.textContent = storedUsername;
+    const currentUser = window.authService.getCurrentUser();
+    if (currentUser && currentUser.username) {
+      userName.textContent = currentUser.username;
+    } else {
+      userName.textContent = '管理員';
+    }
 
     // Set active tab to AI generation by default
     switchTab('ai-generation');
@@ -253,21 +257,44 @@ document.addEventListener('DOMContentLoaded', async function() {
     // Simulate generation process
     setTimeout(() => {
       try {
-        // Detect prompt type and generate accordingly
-        const isImage = isImagePrompt(prompt);
+        // HARDCODED PROMPT DETECTION - EDIT THESE TO CONTROL WHICH PROMPTS LEAD TO WHICH RESULT
+        const imagePrompts = ["圖片", "女鞋"]; // ← EDIT THESE KEYWORDS
+        const isImage = imagePrompts.some(keyword => prompt.toLowerCase().includes(keyword.toLowerCase()));
         
         if (isImage) {
-          // Generate image result
-          const imageUrl = `https://via.placeholder.com/400x300/007bff/ffffff?text=AI+Generated+Image`;
+          // HARDCODED IMAGE GENERATION - EDIT THE IMAGE PATH BELOW
+          const imagePath = "../img/Screenshot 2025-09-02 at 3.41.09 PM.png"; // ← EDIT THIS PATH
+          const imageAlt = "Generated Image";
+          
           resultContent.innerHTML = `
-            <img src="${imageUrl}" alt="AI Generated Image">
-            <p><strong>圖片生成完成：</strong>基於您的提示詞「${prompt}」</p>
+            <img src="${imagePath}" alt="${imageAlt}" style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+            <p style="margin-top: 15px; text-align: center;"><strong>圖片生成完成：</strong>基於您的提示詞「${prompt}」</p>
           `;
           copyBtn.style.display = 'none';
           downloadBtn.style.display = 'inline-block';
         } else {
-          // Generate text result
-          const generatedText = `基於您的提示詞「${prompt}」，AI 生成了以下內容：\n\n這是一個示例生成的文字內容。在實際應用中，這裡會顯示 AI 根據您的提示詞生成的具體內容。\n\n您可以複製這段文字到剪貼簿，或者根據需要進行編輯。`;
+          // HARDCODED TEXT GENERATION - EDIT THE TEXT BELOW
+          const generatedText = `基於您的提示詞「${prompt}」，AI 生成了以下內容：
+
+👠 東笙實業女鞋系列
+
+產品特色：
+• 精選優質皮革，柔軟舒適
+• 時尚設計風格，展現女性魅力
+• 多種尺碼選擇，貼合腳型
+• 精湛工藝製作，品質保證
+• 多種顏色款式，滿足不同需求
+
+適用場合：
+適合各種場合穿著，無論是正式商務、休閒聚會還是特殊活動，都能展現您的優雅氣質。讓每一步都充滿自信與魅力。
+
+保養建議：
+• 定期清潔保養，延長使用壽命
+• 避免潮濕環境存放
+• 使用專用鞋撐保持鞋型
+
+聯繫我們：
+東笙實業 - 您的專業女鞋合作夥伴`; // ← EDIT THIS TEXT
           
           resultContent.innerHTML = `<p style="white-space: pre-line;">${generatedText}</p>`;
           copyBtn.style.display = 'inline-block';
@@ -463,22 +490,21 @@ document.addEventListener('DOMContentLoaded', async function() {
   function loadGenerationRecords() {
     console.log('Loading generation records...');
     
-    // Force refresh sample records to include sampling type
+    // Check if we have existing records
     const savedRecords = localStorage.getItem('generationRecords');
     if (savedRecords) {
       const existingRecords = JSON.parse(savedRecords);
-      // Check if we have all three types (text, image, sampling)
+      // Check if we have the expected sample records (text and image)
       const hasText = existingRecords.some(record => record.type === 'text');
       const hasImage = existingRecords.some(record => record.type === 'image');
-      const hasSampling = existingRecords.some(record => record.type === 'sampling');
       
-      if (hasText && hasImage && hasSampling) {
-        // All types present, use existing records
+      if (hasText && hasImage && existingRecords.length >= 2) {
+        // Sample records present, use existing records
         generationRecords = existingRecords;
-        console.log('Loaded saved records with all types:', generationRecords.length);
+        console.log('Loaded saved records:', generationRecords.length);
       } else {
-        // Missing some types, create fresh sample records
-        console.log('Missing some record types, creating fresh sample records');
+        // Missing sample records, create fresh ones
+        console.log('Missing sample records, creating fresh ones');
         createSampleRecords();
       }
     } else {
@@ -494,24 +520,21 @@ document.addEventListener('DOMContentLoaded', async function() {
   }
 
   function createSampleRecords() {
+    // Clear any existing records first
+    localStorage.removeItem('generationRecords');
+    
     generationRecords = [
       {
         type: 'text',
-        prompt: '寫一篇產品介紹文案',
-        result: '基於您的需求，AI生成了以下產品介紹文案：\n\n產品特色：\n• 高品質材料製作\n• 精緻工藝設計\n• 多種顏色選擇\n• 環保無毒認證\n\n適用場景：\n適合各種室內裝飾需求，為您的空間增添美感。',
-        timestamp: new Date(Date.now() - 2 * 60 * 60 * 1000).toISOString()
+        prompt: '寫一篇女鞋產品介紹文案',
+        result: '基於您的需求，AI生成了以下女鞋產品介紹文案：\n\n👠 東笙實業 - 優質女鞋系列\n\n產品特色：\n• 精選優質皮革，柔軟舒適\n• 時尚設計風格，展現女性魅力\n• 多種尺碼選擇，貼合腳型\n• 精湛工藝製作，品質保證\n• 多種顏色款式，滿足不同需求\n\n適用場合：\n適合各種場合穿著，無論是正式商務、休閒聚會還是特殊活動，都能展現您的優雅氣質。讓每一步都充滿自信與魅力。\n\n保養建議：\n• 定期清潔保養，延長使用壽命\n• 避免潮濕環境存放\n• 使用專用鞋撐保持鞋型\n\n聯繫我們：\n東笙實業 - 您的專業女鞋合作夥伴',
+        timestamp: new Date(Date.now() - 1 * 60 * 60 * 1000).toISOString()
       },
       {
         type: 'image',
-        prompt: '生成一張產品宣傳海報',
-        result: '<img src="https://via.placeholder.com/400x300/007bff/ffffff?text=AI+Generated+Image" alt="AI Generated Image"><p><strong>圖片生成完成：</strong>基於您的提示詞「生成一張產品宣傳海報」</p>',
-        timestamp: new Date(Date.now() - 5 * 60 * 60 * 1000).toISOString()
-      },
-      {
-        type: 'sampling',
-        prompt: '基於上傳的建材樣品圖片，生成多種不同風格的產品展示效果',
-        result: '<img src="https://via.placeholder.com/400x300/28a745/ffffff?text=Sampling+Result" alt="Sampling Result"><p><strong>打樣結果：</strong>基於您的提示詞「基於上傳的建材樣品圖片，生成多種不同風格的產品展示效果」和上傳的圖片，AI 生成了打樣結果。</p>',
-        timestamp: new Date(Date.now() - 8 * 60 * 60 * 1000).toISOString()
+        prompt: '生成一張女鞋產品宣傳海報',
+        result: '<img src="../img/Screenshot 2025-09-02 at 3.41.09 PM.png" alt="女鞋產品宣傳海報"><p><strong>圖片生成完成：</strong>基於您的提示詞「生成一張女鞋產品宣傳海報」</p>',
+        timestamp: new Date(Date.now() - 2 * 60 * 60 * 1000).toISOString()
       }
     ];
     localStorage.setItem('generationRecords', JSON.stringify(generationRecords));
