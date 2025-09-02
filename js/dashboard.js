@@ -2,6 +2,13 @@
 document.addEventListener('DOMContentLoaded', function() {
   console.log('Dashboard loaded');
   
+  // Security: Check authentication first
+  if (!checkAuthentication()) {
+    console.log('User not authenticated, redirecting to login');
+    window.location.href = '/index.html';
+    return;
+  }
+  
   // DOM Elements
   const navItems = document.querySelectorAll('.nav-item');
   const tabContents = document.querySelectorAll('.tab-content');
@@ -767,3 +774,47 @@ document.addEventListener('DOMContentLoaded', function() {
 
   console.log('Dashboard initialization complete');
 });
+
+// Security Functions
+function checkAuthentication() {
+  try {
+    const sessionData = sessionStorage.getItem('userSession');
+    if (!sessionData) {
+      console.log('No session data found');
+      return false;
+    }
+    
+    const session = JSON.parse(sessionData);
+    
+    // Check if session is valid
+    if (!session.isAuthenticated || !session.sessionId) {
+      console.log('Invalid session data');
+      return false;
+    }
+    
+    // Check session expiry (24 hours)
+    const sessionAge = Date.now() - session.loginTime;
+    const maxAge = 24 * 60 * 60 * 1000; // 24 hours in milliseconds
+    
+    if (sessionAge > maxAge) {
+      console.log('Session expired');
+      sessionStorage.removeItem('userSession');
+      return false;
+    }
+    
+    console.log('User authenticated:', session.username);
+    return true;
+  } catch (error) {
+    console.error('Authentication check failed:', error);
+    return false;
+  }
+}
+
+function logout() {
+  // Clear all session data
+  sessionStorage.removeItem('userSession');
+  localStorage.removeItem('currentUser');
+  
+  // Redirect to login
+  window.location.href = '/index.html';
+}

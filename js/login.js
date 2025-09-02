@@ -75,13 +75,15 @@ document.addEventListener('DOMContentLoaded', function() {
     // Show loading state
     setLoadingState(true);
     
-    // Simulate login process
-    setTimeout(() => {
+    // Authenticate user
+    try {
+      const user = window.userManager.authenticate(username, password);
       setLoadingState(false);
-      
-      // For wireframe demo - always succeed
-      handleLoginSuccess(username);
-    }, 1000);
+      handleLoginSuccess(user);
+    } catch (error) {
+      setLoadingState(false);
+      showError(error.message);
+    }
   }
   
   // Set loading state
@@ -92,14 +94,32 @@ document.addEventListener('DOMContentLoaded', function() {
   }
   
   // Handle successful login
-  function handleLoginSuccess(username) {
-    console.log('Login successful for:', username);
+  function handleLoginSuccess(user) {
+    console.log('Login successful for:', user.username);
     
-    // Store username if needed
-    localStorage.setItem('currentUser', username);
+    // Create secure session
+    const sessionData = {
+      userId: user.id,
+      username: user.username,
+      email: user.email,
+      role: user.role,
+      permissions: user.permissions,
+      loginTime: Date.now(),
+      sessionId: generateSessionId(),
+      isAuthenticated: true
+    };
+    
+    // Store session data securely
+    sessionStorage.setItem('userSession', JSON.stringify(sessionData));
+    localStorage.setItem('currentUser', user.username);
     
     // Redirect to dashboard
     window.location.href = '/html/dashboard.html';
+  }
+  
+  // Generate secure session ID
+  function generateSessionId() {
+    return 'session_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
   }
   
   // Show error message
