@@ -1,53 +1,61 @@
 // Demo Protection System
 class DemoProtection {
   constructor() {
-    this.accessCode = this.generateAccessCode(); // Dynamic access code
+    this.accessCode = this.getAccessCode(); // Get from localStorage or generate
     this.maxAttempts = 3;
     this.lockoutTime = 5 * 60 * 1000; // 5 minutes
     this.attempts = this.loadAttempts();
   }
 
-  // Generate dynamic access code that changes daily
-  generateAccessCode() {
-    const secret = 'Dolce2024';
-    const today = new Date().toISOString().slice(0, 10).replace(/-/g, '');
-    const combined = secret + today;
+  // Get access code from localStorage or prompt user to set one
+  getAccessCode() {
+    let accessCode = localStorage.getItem('demoAccessCode');
     
-    let hash = 0;
-    for (let i = 0; i < combined.length; i++) {
-      const char = combined.charCodeAt(i);
-      hash = ((hash << 5) - hash) + char;
-      hash = hash & hash;
+    if (!accessCode) {
+      // First time setup - prompt user to set their own access code
+      accessCode = this.promptForAccessCode();
+      if (accessCode) {
+        localStorage.setItem('demoAccessCode', accessCode);
+        console.log('✅ Access code set successfully!');
+      } else {
+        // Fallback to a default if user cancels
+        accessCode = 'DEMO2024';
+        localStorage.setItem('demoAccessCode', accessCode);
+        console.log('⚠️ Using default access code. You can change it later.');
+      }
     }
     
-    // Convert to uppercase alphanumeric code
-    const base = Math.abs(hash).toString(36).toUpperCase();
-    return base.slice(0, 8);
+    return accessCode;
   }
 
-  // Display today's credentials in console (for demo purposes)
-  displayCredentials() {
-    const accessCode = this.accessCode;
-    const secret = 'Dolce2024';
-    const today = new Date().toISOString().slice(0, 10).replace(/-/g, '');
-    
-    function generatePassword(user) {
-      const combined = secret + today + user;
-      let hash = 0;
-      for (let i = 0; i < combined.length; i++) {
-        const char = combined.charCodeAt(i);
-        hash = ((hash << 5) - hash) + char;
-        hash = hash & hash;
-      }
-      const base = Math.abs(hash).toString(36);
-      return base.slice(0, 8) + '!';
+  // Prompt user to set their own access code
+  promptForAccessCode() {
+    const code = prompt('🔐 Set your demo access code (8+ characters):');
+    if (code && code.length >= 8) {
+      return code.toUpperCase();
     }
-    
-    console.log('🔐 Today\'s Demo Credentials:');
-    console.log('Access Code:', accessCode);
-    console.log('Admin Password:', generatePassword('admin'));
-    console.log('Demo Password:', generatePassword('demo'));
-    console.log('Date:', new Date().toISOString().slice(0, 10));
+    return null;
+  }
+
+  // Allow user to change access code
+  changeAccessCode() {
+    const newCode = prompt('🔐 Enter new access code (8+ characters):');
+    if (newCode && newCode.length >= 8) {
+      localStorage.setItem('demoAccessCode', newCode.toUpperCase());
+      this.accessCode = newCode.toUpperCase();
+      console.log('✅ Access code updated successfully!');
+      return true;
+    } else {
+      console.log('❌ Access code must be at least 8 characters');
+      return false;
+    }
+  }
+
+  // Display current credentials (only shows access code, passwords are private)
+  displayCredentials() {
+    console.log('🔐 Demo Access Code:', this.accessCode);
+    console.log('💡 To change access code: window.demoProtection.changeAccessCode()');
+    console.log('💡 To change passwords: window.userManager.changePassword("admin") or window.userManager.changePassword("demo")');
   }
 
   // Check if access code is required

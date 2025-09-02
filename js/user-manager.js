@@ -19,11 +19,35 @@ class UserManager {
 
   // Default users for demo (in production, these would be in a secure database)
   getDefaultUsers() {
-    // Generate dynamic passwords based on current date and a secret
-    const secret = 'Dolce2024';
-    const today = new Date().toISOString().slice(0, 10).replace(/-/g, '');
-    const adminPass = this.generateDynamicPassword(secret, today, 'admin');
-    const demoPass = this.generateDynamicPassword(secret, today, 'demo');
+    // Check if user has set custom passwords
+    let adminPass = localStorage.getItem('demoAdminPassword');
+    let demoPass = localStorage.getItem('demoUserPassword');
+    
+    if (!adminPass) {
+      // First time setup - prompt for admin password
+      adminPass = this.promptForPassword('admin');
+      if (adminPass) {
+        localStorage.setItem('demoAdminPassword', adminPass);
+        console.log('✅ Admin password set successfully!');
+      } else {
+        adminPass = 'AdminPass2024!';
+        localStorage.setItem('demoAdminPassword', adminPass);
+        console.log('⚠️ Using default admin password. You can change it later.');
+      }
+    }
+    
+    if (!demoPass) {
+      // First time setup - prompt for demo password
+      demoPass = this.promptForPassword('demo user');
+      if (demoPass) {
+        localStorage.setItem('demoUserPassword', demoPass);
+        console.log('✅ Demo user password set successfully!');
+      } else {
+        demoPass = 'DemoPass2024!';
+        localStorage.setItem('demoUserPassword', demoPass);
+        console.log('⚠️ Using default demo password. You can change it later.');
+      }
+    }
     
     const defaultUsers = [
       {
@@ -52,6 +76,38 @@ class UserManager {
 
     this.saveUsers(defaultUsers);
     return defaultUsers;
+  }
+
+  // Prompt user to set their own password
+  promptForPassword(userType) {
+    const password = prompt(`🔐 Set password for ${userType} (8+ characters, must include uppercase, lowercase, number, and special character):`);
+    if (password && this.validatePassword(password).isValid) {
+      return password;
+    } else if (password) {
+      alert('Password must be at least 8 characters and include uppercase, lowercase, number, and special character.');
+      return null;
+    }
+    return null;
+  }
+
+  // Allow user to change passwords
+  changePassword(userType) {
+    const newPassword = prompt(`🔐 Enter new password for ${userType} (8+ characters, must include uppercase, lowercase, number, and special character):`);
+    if (newPassword && this.validatePassword(newPassword).isValid) {
+      if (userType === 'admin') {
+        localStorage.setItem('demoAdminPassword', newPassword);
+      } else {
+        localStorage.setItem('demoUserPassword', newPassword);
+      }
+      console.log(`✅ ${userType} password updated successfully!`);
+      // Reload users with new password
+      this.users = this.loadUsers();
+      return true;
+    } else if (newPassword) {
+      alert('Password must be at least 8 characters and include uppercase, lowercase, number, and special character.');
+      return false;
+    }
+    return false;
   }
 
   // Generate dynamic password that changes daily
