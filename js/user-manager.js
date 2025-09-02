@@ -19,12 +19,18 @@ class UserManager {
 
   // Default users for demo (in production, these would be in a secure database)
   getDefaultUsers() {
+    // Generate dynamic passwords based on current date and a secret
+    const secret = 'Dolce2024';
+    const today = new Date().toISOString().slice(0, 10).replace(/-/g, '');
+    const adminPass = this.generateDynamicPassword(secret, today, 'admin');
+    const demoPass = this.generateDynamicPassword(secret, today, 'demo');
+    
     const defaultUsers = [
       {
         id: 'admin',
         username: 'admin',
         email: 'admin@dolce.com',
-        password: this.hashPassword('DolceDemo2024!'), // Stronger demo password
+        password: this.hashPassword(adminPass),
         role: 'admin',
         permissions: ['read', 'write', 'admin', 'user_management'],
         createdAt: Date.now(),
@@ -35,7 +41,7 @@ class UserManager {
         id: 'demo',
         username: 'demo',
         email: 'demo@dolce.com',
-        password: this.hashPassword('DemoAccess2024!'), // Demo user password
+        password: this.hashPassword(demoPass),
         role: 'user',
         permissions: ['read', 'write'],
         createdAt: Date.now(),
@@ -46,6 +52,22 @@ class UserManager {
 
     this.saveUsers(defaultUsers);
     return defaultUsers;
+  }
+
+  // Generate dynamic password that changes daily
+  generateDynamicPassword(secret, date, user) {
+    // Simple obfuscation - in production, use proper encryption
+    const combined = secret + date + user;
+    let hash = 0;
+    for (let i = 0; i < combined.length; i++) {
+      const char = combined.charCodeAt(i);
+      hash = ((hash << 5) - hash) + char;
+      hash = hash & hash;
+    }
+    
+    // Convert to a readable password format
+    const base = Math.abs(hash).toString(36);
+    return base.slice(0, 8) + '!';
   }
 
   // Simple password hashing (in production, use bcrypt or similar)

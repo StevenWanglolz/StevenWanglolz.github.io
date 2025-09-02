@@ -5,13 +5,20 @@
 This is a **demo version** with basic frontend-only authentication. No backend server required!
 
 ### Demo Login Credentials:
+- **Access Code**: Changes daily (check browser console or use credential generator)
 - **Admin Access**: 
   - Username: `admin`
-  - Password: `DolceDemo2024!`
+  - Password: Changes daily (generated dynamically)
   
 - **Demo User Access**:
   - Username: `demo` 
-  - Password: `DemoAccess2024!`
+  - Password: Changes daily (generated dynamically)
+
+### How to Get Today's Credentials:
+1. Visit your demo site
+2. Open browser console (F12)
+3. Run the credential generator script (see DEMO-CREDENTIALS.md)
+4. Use the generated access code and passwords
 
 ## 🚀 How to Deploy
 

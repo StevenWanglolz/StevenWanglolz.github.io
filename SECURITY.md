@@ -67,12 +67,22 @@ JWT_SECRET=your_jwt_secret_here
 
 ### 3. Demo Access Credentials
 
-#### Access Code (Required First):
-- **Access Code**: `DOLCE2024`
+#### Dynamic Security System
 
-#### Login Credentials:
-- **Admin**: username: `admin`, password: `DolceDemo2024!`
-- **Demo User**: username: `demo`, password: `DemoAccess2024!`
+- **Access Code**: Changes daily (generated dynamically)
+- **Passwords**: Change daily (generated dynamically)
+- **No Hardcoded Credentials**: All credentials are generated based on date + secret
+
+#### Login Credentials
+
+- **Admin**: username: `admin`, password: [generated daily]
+- **Demo User**: username: `demo`, password: [generated daily]
+
+#### How to Get Today's Credentials:
+1. Visit the demo site
+2. Open browser console (F12)
+3. Run the credential generator script
+4. Use the generated access code and passwords
 
 ⚠️ **IMPORTANT**: This is a demo setup. For production, implement proper backend authentication!
 

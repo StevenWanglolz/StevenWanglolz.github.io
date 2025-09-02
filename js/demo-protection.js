@@ -1,10 +1,28 @@
 // Demo Protection System
 class DemoProtection {
   constructor() {
-    this.accessCode = 'DOLCE2024'; // Simple access code
+    this.accessCode = this.generateAccessCode(); // Dynamic access code
     this.maxAttempts = 3;
     this.lockoutTime = 5 * 60 * 1000; // 5 minutes
     this.attempts = this.loadAttempts();
+  }
+
+  // Generate dynamic access code that changes daily
+  generateAccessCode() {
+    const secret = 'Dolce2024';
+    const today = new Date().toISOString().slice(0, 10).replace(/-/g, '');
+    const combined = secret + today;
+    
+    let hash = 0;
+    for (let i = 0; i < combined.length; i++) {
+      const char = combined.charCodeAt(i);
+      hash = ((hash << 5) - hash) + char;
+      hash = hash & hash;
+    }
+    
+    // Convert to uppercase alphanumeric code
+    const base = Math.abs(hash).toString(36).toUpperCase();
+    return base.slice(0, 8);
   }
 
   // Check if access code is required
