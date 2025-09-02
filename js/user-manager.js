@@ -24,7 +24,7 @@ class UserManager {
         id: 'admin',
         username: 'admin',
         email: 'admin@dolce.com',
-        password: this.hashPassword('admin123!'), // Hashed password
+        password: this.hashPassword('DolceDemo2024!'), // Stronger demo password
         role: 'admin',
         permissions: ['read', 'write', 'admin', 'user_management'],
         createdAt: Date.now(),
@@ -32,10 +32,10 @@ class UserManager {
         isActive: true
       },
       {
-        id: 'user1',
-        username: 'user1',
-        email: 'user1@dolce.com',
-        password: this.hashPassword('user123!'),
+        id: 'demo',
+        username: 'demo',
+        email: 'demo@dolce.com',
+        password: this.hashPassword('DemoAccess2024!'), // Demo user password
         role: 'user',
         permissions: ['read', 'write'],
         createdAt: Date.now(),

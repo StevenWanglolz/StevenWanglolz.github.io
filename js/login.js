@@ -22,8 +22,19 @@ document.addEventListener('DOMContentLoaded', function() {
   togglePasswordBtn.addEventListener('click', togglePasswordVisibility);
   
   // Initialize page
-  function initializePage() {
+  async function initializePage() {
     console.log('Initializing login page...');
+    
+    // Check demo access first
+    if (window.demoProtection.isAccessCodeRequired()) {
+      try {
+        await window.demoProtection.showAccessPrompt();
+        console.log('Demo access granted');
+      } catch (error) {
+        console.log('Demo access denied');
+        return;
+      }
+    }
     
     // Show tips based on conditions (simulated)
     showTips();
