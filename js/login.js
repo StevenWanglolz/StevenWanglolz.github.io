@@ -1,4 +1,4 @@
-// Login - Wireframe Version
+// Login - Backend Authentication Version
 document.addEventListener('DOMContentLoaded', function() {
   console.log('Login page loaded');
   
@@ -25,22 +25,12 @@ document.addEventListener('DOMContentLoaded', function() {
   async function initializePage() {
     console.log('Initializing login page...');
     
-    // Check if this is first time setup
-    const isFirstTime = !localStorage.getItem('demoAccessCode');
-    
-    // Check demo access first
-    if (window.demoProtection.isAccessCodeRequired()) {
-      try {
-        await window.demoProtection.showAccessPrompt();
-        console.log('Demo access granted');
-        
-        // Show credentials on first time setup
-        if (isFirstTime) {
-          console.log('🎉 First time setup complete!');
-          window.demoProtection.showAllCredentials();
-        }
-      } catch (error) {
-        console.log('Demo access denied');
+    // Check if user is already authenticated
+    if (window.authService.isAuthenticated()) {
+      const verification = await window.authService.verifyToken();
+      if (verification.success) {
+        console.log('User already authenticated, redirecting to dashboard');
+        window.location.href = '/html/dashboard.html';
         return;
       }
     }
@@ -77,7 +67,7 @@ document.addEventListener('DOMContentLoaded', function() {
   }
   
   // Handle login form submission
-  function handleLogin(event) {
+  async function handleLogin(event) {
     event.preventDefault();
     
     const username = usernameInput.value.trim();
@@ -95,14 +85,19 @@ document.addEventListener('DOMContentLoaded', function() {
     // Show loading state
     setLoadingState(true);
     
-    // Authenticate user
+    // Authenticate with backend
     try {
-      const user = window.userManager.authenticate(username, password);
+      const result = await window.authService.login(username, password);
       setLoadingState(false);
-      handleLoginSuccess(user);
+      
+      if (result.success) {
+        handleLoginSuccess(result.user);
+      } else {
+        showError(result.error || '登入失敗');
+      }
     } catch (error) {
       setLoadingState(false);
-      showError(error.message);
+      showError(error.message || '網路錯誤，請檢查伺服器是否運行');
     }
   }
   
@@ -117,29 +112,8 @@ document.addEventListener('DOMContentLoaded', function() {
   function handleLoginSuccess(user) {
     console.log('Login successful for:', user.username);
     
-    // Create secure session
-    const sessionData = {
-      userId: user.id,
-      username: user.username,
-      email: user.email,
-      role: user.role,
-      permissions: user.permissions,
-      loginTime: Date.now(),
-      sessionId: generateSessionId(),
-      isAuthenticated: true
-    };
-    
-    // Store session data securely
-    sessionStorage.setItem('userSession', JSON.stringify(sessionData));
-    localStorage.setItem('currentUser', user.username);
-    
     // Redirect to dashboard
     window.location.href = '/html/dashboard.html';
-  }
-  
-  // Generate secure session ID
-  function generateSessionId() {
-    return 'session_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
   }
   
   // Show error message

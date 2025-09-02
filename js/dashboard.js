@@ -1,13 +1,23 @@
-// Dashboard - Simple Wireframe Version
-document.addEventListener('DOMContentLoaded', function() {
+// Dashboard - Backend Authentication Version
+document.addEventListener('DOMContentLoaded', async function() {
   console.log('Dashboard loaded');
   
   // Security: Check authentication first
-  if (!checkAuthentication()) {
+  if (!window.authService.isAuthenticated()) {
     console.log('User not authenticated, redirecting to login');
     window.location.href = '/index.html';
     return;
   }
+
+  // Verify token with backend
+  const verification = await window.authService.verifyToken();
+  if (!verification.success) {
+    console.log('Token verification failed, redirecting to login');
+    window.location.href = '/index.html';
+    return;
+  }
+
+  console.log('User authenticated:', verification.user.username);
   
   // DOM Elements
   const navItems = document.querySelectorAll('.nav-item');
@@ -810,10 +820,9 @@ function checkAuthentication() {
   }
 }
 
-function logout() {
-  // Clear all session data
-  sessionStorage.removeItem('userSession');
-  localStorage.removeItem('currentUser');
+async function logout() {
+  // Logout from backend
+  await window.authService.logout();
   
   // Redirect to login
   window.location.href = '/index.html';
