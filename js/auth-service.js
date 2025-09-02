@@ -6,9 +6,13 @@ class AuthService {
   }
 
   getBaseURL() {
-    // Always use localhost for backend server
-    // You'll need to run the backend server locally
-    return 'http://localhost:3000';
+    // Use localhost for development, or your public server URL for sharing
+    if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+      return 'http://localhost:3000';
+    } else {
+      // Replace with your public server URL when sharing
+      return 'https://your-public-server-url.ngrok.io'; // Example: ngrok tunnel
+    }
   }
 
   // Login user
