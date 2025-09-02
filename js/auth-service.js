@@ -6,13 +6,8 @@ class AuthService {
   }
 
   getBaseURL() {
-    // Use localhost for development, or your public server URL for sharing
-    if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
-      return 'http://localhost:3000';
-    } else {
-      // Replace with your public server URL when sharing
-      return 'https://true-sides-watch.loca.lt'; // Example: ngrok tunnel
-    }
+    // Temporarily use localhost for testing
+    return 'http://localhost:3000';
   }
 
   // Login user
