@@ -99,7 +99,7 @@ document.addEventListener('DOMContentLoaded', function() {
     localStorage.setItem('currentUser', username);
     
     // Redirect to dashboard
-    window.location.href = 'html/dashboard.html';
+    window.location.href = '/html/dashboard.html';
   }
   
   // Show error message
