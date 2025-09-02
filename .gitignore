@@ -1,3 +1,5 @@
 .env
 .env.env
 DEMO-CREDENTIALS.md
+node_modules/
+package-lock.json
