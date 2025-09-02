@@ -9,16 +9,16 @@ Your demo is now **completely private**. No one can access it without your perso
 ### **1. Visit Your Demo:**
 Go to: `https://stevenwanglolz.github.io/`
 
-### **2. Set Your Access Code:**
-- You'll be prompted to set an access code (8+ characters)
-- This is stored locally on YOUR browser only
-- Example: `MySecret2024`
+### **2. Automatic Setup:**
+- Access code is automatically generated and stored locally
+- Admin password is automatically generated and stored locally  
+- Demo user password is automatically generated and stored locally
+- All credentials are unique to YOUR browser only
 
-### **3. Set Your Passwords:**
-- You'll be prompted to set admin password
-- You'll be prompted to set demo user password
-- Both stored locally on YOUR browser only
-- Must include: uppercase, lowercase, number, special character
+### **3. Get Your Credentials:**
+- Open browser console (F12) after first visit
+- You'll see all your credentials displayed
+- Copy them down for your records
 
 ## 🔒 **How It Works:**
 
@@ -63,6 +63,11 @@ window.userManager.changePassword("demo")
 ### **View Current Access Code:**
 ```javascript
 window.demoProtection.displayCredentials()
+```
+
+### **View All Credentials:**
+```javascript
+window.demoProtection.showAllCredentials()
 ```
 
 ## 🔐 **Security Benefits:**

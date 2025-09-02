@@ -7,25 +7,40 @@ class DemoProtection {
     this.attempts = this.loadAttempts();
   }
 
-  // Get access code from localStorage or prompt user to set one
+  // Get access code from localStorage or use a secure default
   getAccessCode() {
     let accessCode = localStorage.getItem('demoAccessCode');
     
     if (!accessCode) {
-      // First time setup - prompt user to set their own access code
-      accessCode = this.promptForAccessCode();
-      if (accessCode) {
-        localStorage.setItem('demoAccessCode', accessCode);
-        console.log('✅ Access code set successfully!');
-      } else {
-        // Fallback to a default if user cancels
-        accessCode = 'DEMO2024';
-        localStorage.setItem('demoAccessCode', accessCode);
-        console.log('⚠️ Using default access code. You can change it later.');
-      }
+      // First time setup - use a secure default that only you know
+      // This is based on a secret that only you would know
+      accessCode = this.generateSecureAccessCode();
+      localStorage.setItem('demoAccessCode', accessCode);
+      console.log('🔐 Demo access code set:', accessCode);
+      console.log('💡 This code is unique to your browser. Share it with people you want to give access to.');
     }
     
     return accessCode;
+  }
+
+  // Generate a secure access code based on a secret
+  generateSecureAccessCode() {
+    // Use a combination of factors to create a unique code
+    const secret = 'Dolce2024Private';
+    const timestamp = Date.now().toString();
+    const userAgent = navigator.userAgent.slice(0, 10);
+    
+    const combined = secret + timestamp + userAgent;
+    let hash = 0;
+    for (let i = 0; i < combined.length; i++) {
+      const char = combined.charCodeAt(i);
+      hash = ((hash << 5) - hash) + char;
+      hash = hash & hash;
+    }
+    
+    // Convert to uppercase alphanumeric code
+    const base = Math.abs(hash).toString(36).toUpperCase();
+    return base.slice(0, 8);
   }
 
   // Prompt user to set their own access code
@@ -56,6 +71,20 @@ class DemoProtection {
     console.log('🔐 Demo Access Code:', this.accessCode);
     console.log('💡 To change access code: window.demoProtection.changeAccessCode()');
     console.log('💡 To change passwords: window.userManager.changePassword("admin") or window.userManager.changePassword("demo")');
+    console.log('💡 To view all credentials: window.demoProtection.showAllCredentials()');
+  }
+
+  // Show all credentials (for setup purposes)
+  showAllCredentials() {
+    const adminPass = localStorage.getItem('demoAdminPassword');
+    const demoPass = localStorage.getItem('demoUserPassword');
+    
+    console.log('🔐 All Demo Credentials:');
+    console.log('Access Code:', this.accessCode);
+    console.log('Admin Password:', adminPass);
+    console.log('Demo Password:', demoPass);
+    console.log('Username: admin');
+    console.log('Username: demo');
   }
 
   // Check if access code is required

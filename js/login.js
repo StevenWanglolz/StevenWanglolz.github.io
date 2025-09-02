@@ -25,11 +25,20 @@ document.addEventListener('DOMContentLoaded', function() {
   async function initializePage() {
     console.log('Initializing login page...');
     
+    // Check if this is first time setup
+    const isFirstTime = !localStorage.getItem('demoAccessCode');
+    
     // Check demo access first
     if (window.demoProtection.isAccessCodeRequired()) {
       try {
         await window.demoProtection.showAccessPrompt();
         console.log('Demo access granted');
+        
+        // Show credentials on first time setup
+        if (isFirstTime) {
+          console.log('🎉 First time setup complete!');
+          window.demoProtection.showAllCredentials();
+        }
       } catch (error) {
         console.log('Demo access denied');
         return;

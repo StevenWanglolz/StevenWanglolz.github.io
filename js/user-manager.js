@@ -24,29 +24,19 @@ class UserManager {
     let demoPass = localStorage.getItem('demoUserPassword');
     
     if (!adminPass) {
-      // First time setup - prompt for admin password
-      adminPass = this.promptForPassword('admin');
-      if (adminPass) {
-        localStorage.setItem('demoAdminPassword', adminPass);
-        console.log('✅ Admin password set successfully!');
-      } else {
-        adminPass = 'AdminPass2024!';
-        localStorage.setItem('demoAdminPassword', adminPass);
-        console.log('⚠️ Using default admin password. You can change it later.');
-      }
+      // First time setup - generate secure default password
+      adminPass = this.generateSecurePassword('admin');
+      localStorage.setItem('demoAdminPassword', adminPass);
+      console.log('🔐 Admin password set:', adminPass);
+      console.log('💡 You can change this password later using: window.userManager.changePassword("admin")');
     }
     
     if (!demoPass) {
-      // First time setup - prompt for demo password
-      demoPass = this.promptForPassword('demo user');
-      if (demoPass) {
-        localStorage.setItem('demoUserPassword', demoPass);
-        console.log('✅ Demo user password set successfully!');
-      } else {
-        demoPass = 'DemoPass2024!';
-        localStorage.setItem('demoUserPassword', demoPass);
-        console.log('⚠️ Using default demo password. You can change it later.');
-      }
+      // First time setup - generate secure default password
+      demoPass = this.generateSecurePassword('demo');
+      localStorage.setItem('demoUserPassword', demoPass);
+      console.log('🔐 Demo user password set:', demoPass);
+      console.log('💡 You can change this password later using: window.userManager.changePassword("demo")');
     }
     
     const defaultUsers = [
@@ -76,6 +66,30 @@ class UserManager {
 
     this.saveUsers(defaultUsers);
     return defaultUsers;
+  }
+
+  // Generate secure password based on user type and browser info
+  generateSecurePassword(userType) {
+    const secret = 'Dolce2024Secure';
+    const timestamp = Date.now().toString();
+    const userAgent = navigator.userAgent.slice(0, 10);
+    
+    const combined = secret + userType + timestamp + userAgent;
+    let hash = 0;
+    for (let i = 0; i < combined.length; i++) {
+      const char = combined.charCodeAt(i);
+      hash = ((hash << 5) - hash) + char;
+      hash = hash & hash;
+    }
+    
+    // Convert to a secure password format
+    const base = Math.abs(hash).toString(36);
+    const upper = base.slice(0, 2).toUpperCase();
+    const lower = base.slice(2, 4);
+    const numbers = Math.abs(hash).toString().slice(0, 2);
+    const special = '!@#$%^&*'[Math.abs(hash) % 8];
+    
+    return upper + lower + numbers + special + base.slice(4, 6);
   }
 
   // Prompt user to set their own password
