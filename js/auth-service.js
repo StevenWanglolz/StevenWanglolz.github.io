@@ -11,7 +11,7 @@ class AuthService {
       return 'http://localhost:3000';
     } else {
       // Replace with your public server URL when sharing
-      return 'https://your-public-server-url.ngrok.io'; // Example: ngrok tunnel
+      return 'https://true-sides-watch.loca.lt'; // Example: ngrok tunnel
     }
   }
 
