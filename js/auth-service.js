@@ -11,7 +11,7 @@ class AuthService {
       return 'http://localhost:3000';
     } else {
       // Use the tunnel URL for GitHub Pages
-      return 'https://nine-trains-poke.loca.lt';
+      return 'https://metal-crabs-hide.loca.lt';
     }
   }
 
