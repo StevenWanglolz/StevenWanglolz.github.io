@@ -68,6 +68,142 @@ document.addEventListener('DOMContentLoaded', async function() {
   const RECORDS_PER_PAGE = 5;
   let currentRecordsPage = 1;
 
+  // Generation Examples Configuration
+  const generationExamples = {
+    text: [
+      {
+        keywords: ['情人節'],
+        title: '情人節',
+        content: `好的🌸 馬上用「氛圍文案模板」幫妳生成 5 組 主標＋副標，給你靈感
+1️⃣
+* 主標：我們的步伐，剛剛好
+* 副標：情人節，不是為了多盛大，而是走在一起的每一步都值得紀念。
+2️⃣
+* 主標：你走的那條路，我剛好也在走
+* 副標：有些人，不需奔跑也能靠近；有些鞋，不需新潮也能剛剛好。
+3️⃣
+* 主標：兩個人剛剛好的距離
+* 副標：不是多快，而是能一起慢慢走到遠方。
+4️⃣
+* 主標：心跳的節奏，正好與你合拍
+* 副標：走在一起，不必多言，愛就在每一步之間。
+5️⃣
+* 主標：在這個剛剛好的季節，遇見剛剛好的人
+* 副標：選一雙陪伴，走一段故事，把情人節變成永遠的篇章。`
+      },
+      {
+        keywords: ['樂福鞋'],
+        title: '樂福鞋',
+        content: `
+
+✨ 樂福鞋文案字詞靈感庫
+① 氛圍感字詞
+* 優雅、低調、自信
+* 經典、不敗、百搭
+* 從容、不費力、自在
+* 都會、俐落、日常
+② 舒適感字詞
+* 輕盈、好走、柔軟
+* 一腳蹬、方便、無壓力
+* 隨性、放鬆、減壓
+* 穿脫快速、舒適支撐
+③ 時尚感字詞
+* 法式、英倫、學院風
+* 簡約、俐落、摩登
+* 復古、潮流、設計感
+* 率性、氣場、質感
+④ 場景字詞
+* 通勤、上班、會議
+* 約會、聚會、咖啡廳
+* 旅行、街拍、日常散步
+* 學院、城市、假日漫步`
+      },
+      {
+        keywords: ['夏天'],
+        title: '夏天',
+        content: `好的～這裡有三個：
+夏日剛剛好
+清涼一夏，步步心動
+盛夏步伐計劃`
+      },
+      {
+        keywords: ['德訓鞋'],
+        title: '冬天',
+        content: `好的 幫妳整理 5種德訓鞋穿搭靈感，分別對應不同風格，妳可以依個人喜好延伸：
+
+👟 德訓鞋穿搭靈感 5 種
+1️⃣ 休閒韓系風
+* 上身：寬鬆大學T、棒球帽
+* 下身：直筒牛仔褲或運動棉褲
+* 特色：青春俏皮，CHOICE 風格
+2️⃣ 極簡通勤風
+* 上身：俐落襯衫、針織背心
+* 下身：窄管西裝褲、單肩包
+* 特色：乾淨俐落，ORIN 風格
+3️⃣ 文青日常風
+* 上身：素色圓領T、薄外套
+* 下身：卡其褲或棉麻寬褲
+* 特色：自然舒服，MAGY 風格
+4️⃣ 甜美法式風
+* 上身：碎花襯衫、針織小外套
+* 下身：高腰短裙 or A字裙
+* 特色：清新可愛，DIANA 風格
+5️⃣ 街頭時尚風
+* 上身：oversize西裝外套、短版背心
+* 下身：皮短褲 or 高腰牛仔裙
+* 特色：個性跩感，TAS 風格`
+      },
+      {
+        keywords: ['高跟鞋'],
+        title: '高跟鞋',
+        content: `妳這次要的是 品名關鍵字，方便做成商品名稱或SEO標籤，而不是完整文案。
+我幫妳整理出適合 緞帶高跟鞋 的關鍵字組合，分不同風格：
+
+🎀 緞帶高跟鞋 品名關鍵字靈感
+① 氛圍感（浪漫/甜美）
+* 緞帶蝴蝶結高跟鞋
+* 浪漫緞帶繫帶高跟鞋
+* 甜美緞帶細跟鞋
+* 夢幻粉緞帶高跟鞋
+② 時尚感（俐落/潮流）
+* 綁帶尖頭高跟鞋
+* 緞帶綁帶細高跟
+* 性感緞帶細跟鞋
+* 緞帶繫踝高跟鞋
+③ 場景感（情人節/婚禮/約會）
+* 情人節緞帶高跟鞋
+* 婚禮蝴蝶結高跟鞋
+* 約會款緞帶高跟鞋
+* 聚會緞帶細高跟
+④ 材質/細節強調
+* 絲緞緞帶高跟鞋
+* 水鑽蝴蝶結高跟鞋
+* 細帶緞帶高跟鞋
+* 綁結緞帶尖頭鞋`
+      }
+    ],
+    image: [
+      {
+        keywords: ['情人節', '圖片'],
+        title: '情人節圖片',
+        imagePath: '../img/valentines.png',
+        description: ''
+      },
+      {
+        keywords: ['圖片', '聖誕節'],
+        title: '聖誕節圖片',
+        imagePath: '../img/christmas.png',
+        description: ''
+      },
+      {
+        keywords: ['圖片', '休閒鞋'],
+        title: '設計圖片',
+        imagePath: '../img/spring.png',
+        description: ''
+      }
+    ]
+  };
+
   // Initialize dashboard
   initializeDashboard();
   
@@ -228,18 +364,31 @@ document.addEventListener('DOMContentLoaded', async function() {
     }, 3000);
   }
   
-  // Detect if prompt is for image generation
-  function isImagePrompt(prompt) {
-    const imageKeywords = [
-      '圖片', '圖像', '照片', '繪圖', '畫', '設計', '海報', '標誌', '圖標',
-      'image', 'picture', 'photo', 'drawing', 'design', 'poster', 'logo', 'icon',
-      '生成圖片', '創建圖片', '製作圖片', '產生圖片'
-    ];
+  // Find matching example based on keywords
+  function findMatchingExample(prompt, type) {
+    const examples = generationExamples[type] || [];
+    const promptLower = prompt.toLowerCase();
     
-    return imageKeywords.some(keyword => 
-      prompt.toLowerCase().includes(keyword.toLowerCase())
-    );
+    // Find the first example that has matching keywords
+    for (const example of examples) {
+      const matches = example.keywords.filter(keyword => 
+        promptLower.includes(keyword.toLowerCase())
+      );
+      
+      // For image examples, require multiple keyword matches
+      // For text examples, require only one keyword match
+      const hasMatch = type === 'image' ? matches.length >= 2 : matches.length >= 1;
+      
+      if (hasMatch) {
+        return example;
+      }
+    }
+    
+    // If no match found, return null (no fallback)
+    return null;
   }
+
+
   
   // Handle AI Generation
   function handleGeneration() {
@@ -257,46 +406,56 @@ document.addEventListener('DOMContentLoaded', async function() {
     // Simulate generation process
     setTimeout(() => {
       try {
-        // HARDCODED PROMPT DETECTION - EDIT THESE TO CONTROL WHICH PROMPTS LEAD TO WHICH RESULT
-        const imagePrompts = ["圖片", "女鞋"]; // ← EDIT THESE KEYWORDS
-        const isImage = imagePrompts.some(keyword => prompt.toLowerCase().includes(keyword.toLowerCase()));
+        // Find matching examples for both text and image
+        const textExample = findMatchingExample(prompt, 'text');
+        const imageExample = findMatchingExample(prompt, 'image');
         
-        if (isImage) {
-          // HARDCODED IMAGE GENERATION - EDIT THE IMAGE PATH BELOW
+        // Determine which type to use based on which example matches
+        // Only use image if it has a valid match (2+ keywords), otherwise use text
+        const isImage = imageExample && imageExample !== null;
+        const matchingExample = isImage ? imageExample : textExample;
+        
+        if (isImage && matchingExample) {
+          // Generate image content using matching example
           const imagePath = "../img/Screenshot 2025-09-02 at 3.41.09 PM.png"; // ← EDIT THIS PATH
-          const imageAlt = "Generated Image";
+          const imageAlt = matchingExample.title;
+          const description = matchingExample.description.replace('{prompt}', prompt);
           
           resultContent.innerHTML = `
-            <img src="${imagePath}" alt="${imageAlt}" style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
-            <p style="margin-top: 15px; text-align: center;"><strong>圖片生成完成：</strong>基於您的提示詞「${prompt}」</p>
+            <img src="${matchingExample.imagePath}" alt="${imageAlt}" style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+            <p style="margin-top: 15px; text-align: center;"><strong>${description}</strong></p>
           `;
           copyBtn.style.display = 'none';
           downloadBtn.style.display = 'inline-block';
-        } else {
-          // HARDCODED TEXT GENERATION - EDIT THE TEXT BELOW
-          const generatedText = `基於您的提示詞「${prompt}」，AI 生成了以下內容：
-
-👠 東笙實業女鞋系列
-
-產品特色：
-• 精選優質皮革，柔軟舒適
-• 時尚設計風格，展現女性魅力
-• 多種尺碼選擇，貼合腳型
-• 精湛工藝製作，品質保證
-• 多種顏色款式，滿足不同需求
-
-適用場合：
-適合各種場合穿著，無論是正式商務、休閒聚會還是特殊活動，都能展現您的優雅氣質。讓每一步都充滿自信與魅力。
-
-保養建議：
-• 定期清潔保養，延長使用壽命
-• 避免潮濕環境存放
-• 使用專用鞋撐保持鞋型
-
-聯繫我們：
-東笙實業 - 您的專業女鞋合作夥伴`; // ← EDIT THIS TEXT
+        } else if (!isImage && matchingExample) {
+          // Generate text content using matching example
+          const generatedText = matchingExample.content.replace(/{prompt}/g, prompt);
           
           resultContent.innerHTML = `<p style="white-space: pre-line;">${generatedText}</p>`;
+          copyBtn.style.display = 'inline-block';
+          downloadBtn.style.display = 'none';
+        } else {
+          // Fallback if no matching example found
+          const fallbackText = `基於您的提示詞「${prompt}」，AI 生成了以下內容：
+
+📝 生成結果
+
+您的提示詞：${prompt}
+
+生成內容：
+這是一個基於您輸入的提示詞生成的示例內容。系統會根據您的需求提供相應的文字或圖片內容。
+
+如需更精確的結果，請嘗試使用更具體的關鍵詞，如：
+• 女鞋、鞋子、鞋類、高跟鞋
+• 文案、廣告、宣傳
+• 產品、商品、介紹
+• 圖片、圖像、照片
+• 設計、標誌、圖標
+
+聯繫我們：
+東笙實業 - 您的專業合作夥伴`;
+          
+          resultContent.innerHTML = `<p style="white-space: pre-line;">${fallbackText}</p>`;
           copyBtn.style.display = 'inline-block';
           downloadBtn.style.display = 'none';
         }
@@ -309,7 +468,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         saveGenerationRecord({
           type: isImage ? 'image' : 'text',
           prompt: prompt,
-          result: isImage ? resultContent.innerHTML : generatedText,
+          result: isImage ? resultContent.innerHTML : resultContent.textContent,
           timestamp: new Date().toISOString()
         });
 
