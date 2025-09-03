@@ -1,0 +1,38 @@
+# Web Development Dependencies
+# For local development server
+http.server==0.1.0
+
+# For production deployment (optional)
+# gunicorn==21.2.0
+# waitress==2.1.2
+
+# For development tools (optional)
+# livereload==2.6.3
+# watchdog==3.0.0
+
+# For testing (optional)
+# pytest==7.4.3
+# selenium==4.15.2
+
+# For code quality (optional)
+# flake8==6.1.0
+# black==23.11.0
+
+# For documentation (optional)
+# mkdocs==1.5.3
+# mkdocs-material==9.4.8
+
+# For image processing (if needed)
+# Pillow==10.1.0
+
+# For file handling
+# python-magic==0.4.27
+
+# For environment variables
+# python-dotenv==1.0.0
+
+# For CORS handling (if needed)
+# flask-cors==4.0.0
+
+# For static file serving
+# whitenoise==6.6.0
